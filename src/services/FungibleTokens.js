@@ -11,8 +11,11 @@ export default class FungibleTokens {
     }
 
     static async getBalanceOf({ contractName, accountId }) {
-        console.log(this.viewFunctionAccount)
         return this.viewFunctionAccount.viewFunction(contractName, 'ft_balance_of', { account_id: accountId });
+    }
+
+    static async getMetadata({ contractName }) {
+        return this.viewFunctionAccount.viewFunction(contractName, 'ft_metadata');
     }
 
 }

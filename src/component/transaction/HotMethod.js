@@ -1,4 +1,4 @@
-import {Component} from "react";
+import React,{Component} from "react";
 import {Modal, Table} from "antd";
 
 class HotMethod extends Component{

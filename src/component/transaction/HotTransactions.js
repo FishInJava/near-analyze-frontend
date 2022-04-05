@@ -1,4 +1,4 @@
-import {Component} from "react";
+import React,{Component} from "react";
 import{Table,Button} from "antd";
 import axios from "axios";
 import HotMethod from "./HotMethod";
@@ -18,7 +18,6 @@ class HotTransactions extends Component{
 
     getHotAccountId = (param)=>{
         axios.post("http://localhost:8080/nearAnalyzeController/getHotAccountId",param).then((res) =>{
-            console.log(res.data.data.list)
             this.setState({getHotAccountId:res.data.data.list,total:res.data.data.total})
         })
     };

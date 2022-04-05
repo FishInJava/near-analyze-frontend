@@ -1,4 +1,4 @@
-import {Component} from "react";
+import React,{Component} from "react";
 import {Table, Button} from "antd";
 import axios from "axios";
 
@@ -16,7 +16,6 @@ class Statistics extends Component {
 
     getStatisticsTransactions = (param) => {
         axios.post("http://localhost:8080/nearAnalyzeController/getStatisticsTransactions", param).then((res) => {
-            console.log(res.data.data.list)
             this.setState({getStatisticsTransactions: res.data.data.list, total: res.data.data.total})
         })
     };
