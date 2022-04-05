@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import HotTransactions from "../component/transaction/HotTransactions";
 import Statistics from "../component/statistics/Statistics";
 import Wallet from "../component/wallet/Wallet";

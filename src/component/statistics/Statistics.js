@@ -1,5 +1,4 @@
 import {Component} from "react";
-import "antd/dist/antd.css";
 import {Table, Button} from "antd";
 import axios from "axios";
 
@@ -61,16 +60,16 @@ class Statistics extends Component {
             <div>
                 <h1 align="center">Statistics页面</h1>
                 <div>
-                    <Button onClick={() => this.state.flag = 1}>signer_id发起者维度</Button>
-                    <Button onClick={() => this.state.flag = 2}>receiver_id合约维度</Button>
+                    <Button onClick={() => this.setState({flag: 1})}>signer_id发起者维度</Button>
+                    <Button onClick={() => this.setState({flag: 2})}>receiver_id合约维度</Button>
                 </div>
                 <div>
-                    <Button onClick={() => this.state.milliTime = 30 * 60 * 1000}>半小时内</Button>
-                    <Button onClick={() => this.state.milliTime = 60 * 60 * 1000}>1小时内</Button>
-                    <Button onClick={() => this.state.milliTime = 2 * 60 * 60 * 1000}>2小时内</Button>
-                    <Button onClick={() => this.state.milliTime = 4 * 60 * 60 * 1000}>4小时内</Button>
-                    <Button onClick={() => this.state.milliTime = 12 * 60 * 60 * 1000}>12小时内</Button>
-                    <Button onClick={() => this.state.milliTime = 24 * 60 * 60 * 1000}>1天内</Button>
+                    <Button onClick={() => this.setState({milliTime: 30 * 60 * 1000})}>半小时内</Button>
+                    <Button onClick={() => this.setState({milliTime: 60 * 60 * 1000})}>1小时内</Button>
+                    <Button onClick={() => this.setState({milliTime: 2 * 60 * 60 * 1000})}>2小时内</Button>
+                    <Button onClick={() => this.setState({milliTime: 4 * 60 * 60 * 1000})}>4小时内</Button>
+                    <Button onClick={() => this.setState({milliTime: 12 * 60 * 60 * 1000})}>12小时内</Button>
+                    <Button onClick={() => this.setState({milliTime: 24 * 60 * 60 * 1000})}>1天内</Button>
                 </div>
                 <div>
                     <Button type="primary" onClick={() => this.getStatisticsTransactions({

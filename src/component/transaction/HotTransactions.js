@@ -1,5 +1,4 @@
 import {Component} from "react";
-import "antd/dist/antd.css";
 import{Table,Button} from "antd";
 import axios from "axios";
 import HotMethod from "./HotMethod";

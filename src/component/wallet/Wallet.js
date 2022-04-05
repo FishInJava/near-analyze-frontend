@@ -1,15 +1,20 @@
 import {Component} from "react";
 import {Input} from 'antd';
 import FungibleTokens from "../../services/FungibleTokens";
+import {config} from "../../config";
+
 const {Search} = Input;
 
 class Wallet extends Component {
 
-    onSearch = (accountId) => {
-        const likelyTokenContracts = FungibleTokens.getLikelyTokenContracts({accountId: accountId});
-        likelyTokenContracts.then(res=>{
-            alert(res)
-        })
+    onSearch = async (accountId) => {
+        // const likelyTokenContracts = FungibleTokens.getLikelyTokenContracts({accountId: accountId});
+        // likelyTokenContracts.then(res=>{
+        //     alert(res)
+        // })
+        const likelyContracts = [...new Set([...(await FungibleTokens.getLikelyTokenContracts({accountId: accountId})), ...config.WHITELISTED_CONTRACTS])];
+        console.log(likelyContracts)
+        alert(likelyContracts)
     }
 
     render() {
