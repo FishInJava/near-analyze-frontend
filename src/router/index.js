@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes} from "react-router-dom";
-import HotTransactions from "../view/HotTransactions";
-import Statistics from "../view/statistics/Statistics";
+import HotTransactions from "../component/transaction/HotTransactions";
+import Statistics from "../component/statistics/Statistics";
 
 /*路由*/
 export default function MainRouter() {

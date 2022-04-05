@@ -1,4 +1,4 @@
-import HotTransactions from "./view/HotTransactions";
+import HotTransactions from "./component/transaction/HotTransactions";
 
 import {HashRouter, Route, Routes} from "react-router-dom";
 import MainRouter from "./router";
