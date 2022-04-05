@@ -12,9 +12,31 @@ class Wallet extends Component {
         // likelyTokenContracts.then(res=>{
         //     alert(res)
         // })
-        const likelyContracts = [...new Set([...(await FungibleTokens.getLikelyTokenContracts({accountId: accountId})), ...config.WHITELISTED_CONTRACTS])];
-        console.log(likelyContracts)
-        alert(likelyContracts)
+        const likelyContracts = [...new Set([...(await FungibleTokens.getLikelyTokenContracts({accountId})), ...config.WHITELISTED_CONTRACTS])];
+        // console.log(likelyContracts)
+        // alert(likelyContracts)
+
+        /*
+           如何处理await方法呢？
+        * */
+        let result = [];
+        await Promise.all(likelyContracts.map(async (contractName) => {
+            try {
+                const balance = await FungibleTokens.getBalanceOf({contractName, accountId});
+                balance.then(res =>{
+                    result.push({
+                        "contractName":contractName,
+                        "balance":res
+                    });
+                })
+            } catch (e) {
+                // Continue loading other likely contracts on failures
+                console.warn(`Failed to load FT for ${contractName}`, e);
+            }
+        })).then(res=>{
+            console.log(result)
+        })
+
     }
 
     render() {
