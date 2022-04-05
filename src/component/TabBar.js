@@ -11,6 +11,9 @@ export default function TabBar() {
                 <li>
                     <NavLink to="/statistics">合约</NavLink>
                 </li>
+                <li>
+                    <NavLink to="/wallet">钱包查询</NavLink>
+                </li>
             </ul>
         </footer>)
 }

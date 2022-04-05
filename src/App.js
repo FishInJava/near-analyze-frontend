@@ -1,7 +1,7 @@
 import HotTransactions from "./component/transaction/HotTransactions";
 
 import {HashRouter, Route, Routes} from "react-router-dom";
-import MainRouter from "./router";
+import MainRouter from "./routes";
 import TabBar from "./component/TabBar";
 
 function App() {

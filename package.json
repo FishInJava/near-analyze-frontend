@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^4.19.3",
     "axios": "^0.26.1",
+    "near-api-js": "^0.44.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-navigation": "^4.4.4",
