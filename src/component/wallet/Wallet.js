@@ -33,6 +33,8 @@ class Wallet extends Component {
                 result.push({
                     "contract":contractName,
                     "symbol":metadata.symbol,
+                    "decimals":metadata.decimals,
+                    "balanceOrigin":balance,
                     "balance":balanceResult
                 });
             } catch (e) {
