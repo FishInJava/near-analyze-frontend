@@ -1,15 +1,20 @@
-import React,{Component} from "react";
-import {Input} from 'antd';
+import React, {Component} from "react";
+import {Input, Table} from 'antd';
 import FungibleTokens from "../../services/FungibleTokens";
 import {config} from "../../config";
 import {formatNearAmount} from "../../utils/balanceHelpers";
-import { formatTokenAmount } from '../../utils/amounts';
+import {formatTokenAmount} from '../../utils/amounts';
 import NonFungibleTokens from "../../services/NonFungibleTokens";
 
 const {Search} = Input;
 const FRAC_DIGITS = 5;
 
 class Wallet extends Component {
+    state = {
+        // 用户ft和nft信息
+        ft:[],
+        nft:[],
+    };
 
     onSearch = async (accountId) => {
         const likelyContracts = [...new Set([...(await FungibleTokens.getLikelyTokenContracts({accountId})), ...config.WHITELISTED_CONTRACTS])];
@@ -45,7 +50,8 @@ class Wallet extends Component {
                 console.warn(`Failed to load FT for ${contractName}`, e);
             }
         })).then(()=>{
-            alert(JSON.stringify(result))
+            // alert(JSON.stringify(result))
+            this.setState({ft:result})
         })
 
 
@@ -55,19 +61,60 @@ class Wallet extends Component {
                 const metadata = await NonFungibleTokens.getMetadata(contractName);
                 // 币种的元数据信息
                 NFTResult.push({
-                    "metadata":metadata,
+                    "spec":metadata.spec,
+                    "name":metadata.name,
+                    "symbol":metadata.symbol,
+                    "base_uri":metadata.base_uri,
+                    "icon":metadata.icon,
+                    "reference":metadata.reference,
+                    "reference_hash":metadata.reference_hash,
                 });
             } catch (e) {
                 // Continue loading other likely contracts on failures
                 console.warn(`Failed to load NFT for ${contractName}`, e);
             }
         })).then(()=>{
-            alert(JSON.stringify(NFTResult))
+            // alert(JSON.stringify(NFTResult))
+            this.setState({nft:NFTResult})
         })
 
     }
 
     render() {
+        const ft_columns = [
+            {
+                title: '合约简称',
+                dataIndex: 'symbol',
+                key: "symbol",
+            },
+            {
+                title: '用户余额',
+                dataIndex: 'balance',
+                key: "balance",
+            },
+            {
+                title: '合约地址',
+                dataIndex: 'contract',
+                key: "contract",
+            },
+        ];
+        const nft_columns = [
+            {
+                title: 'nft名称',
+                dataIndex: 'name',
+                key: "name",
+            },
+            {
+                title: 'nft符号',
+                dataIndex: 'symbol',
+                key: "symbol",
+            },
+            {
+                title: 'spec',
+                dataIndex: 'spec',
+                key: "spec",
+            },
+        ];
         return (
             <div>
                 <h1 align="center">Wallet页面</h1>
@@ -78,6 +125,12 @@ class Wallet extends Component {
                     size="large"
                     onSearch={(value) => this.onSearch(value)}
                 />
+                <div>
+                    <Table dataSource={this.state.ft} columns={ft_columns} rowKey="contract" />
+                </div>
+                <div>
+                    <Table dataSource={this.state.nft} columns={nft_columns} rowKey="name" />
+                </div>
             </div>);
     }
 }
