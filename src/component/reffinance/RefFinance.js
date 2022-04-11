@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Input, Table} from "antd";
 import axios from "axios";
+import "antd/dist/antd.min.css";
 
 const {Search} = Input;
 
@@ -18,7 +19,6 @@ class RefFinance extends Component {
             this.setState({userPools: res.data.data.pools})
             this.setState({userSeeds: res.data.data.userSeeds})
         })
-        console.log(this.state)
     }
 
     render() {

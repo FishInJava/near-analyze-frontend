@@ -1,6 +1,7 @@
 import React,{Component} from "react";
 import {Table, Button} from "antd";
 import axios from "axios";
+import "antd/dist/antd.min.css";
 
 // 从transaction_analyze表中获取数据分析
 class Statistics extends Component {

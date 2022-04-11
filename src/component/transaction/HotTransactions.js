@@ -2,6 +2,7 @@ import React,{Component} from "react";
 import{Table,Button} from "antd";
 import axios from "axios";
 import HotMethod from "./HotMethod";
+import "antd/dist/antd.min.css";
 
 // 有点意思，直接把一整坨html定义成一个对象
 class HotTransactions extends Component{

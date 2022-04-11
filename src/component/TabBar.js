@@ -17,6 +17,9 @@ export default function TabBar() {
                 <li>
                     <NavLink to="/ref-finance">REF份额分析</NavLink>
                 </li>
+                <li>
+                    <NavLink to="/transaction/user">用户交易分析</NavLink>
+                </li>
             </ul>
         </footer>)
 }

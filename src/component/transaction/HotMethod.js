@@ -1,5 +1,6 @@
 import React,{Component} from "react";
 import {Modal, Table} from "antd";
+import "antd/dist/antd.min.css";
 
 class HotMethod extends Component{
     render() {
