@@ -7,19 +7,32 @@ const {Search} = Input;
 class UserTransaction extends Component {
     state = {
         userTransactions: [],
+        userAccountId: "",
         // 分页使用
         total: 0,
         pageSize: 10,
     };
 
-    onSearch = async (param) => {
+    onSearch = (param) => {
+        this.setState({userAccountId: param.userAccountId})
         let url = `http://localhost:8080/userTransactionController/getUserTransactions`
-        await axios.post(url, param).then((res) => {
+        axios.post(url, param).then((res) => {
             this.setState({
                 userTransactions: res.data.data.list,
                 total: res.data.data.total
             })
         })
+    }
+
+    // 分页
+    changePage = (page,pageSize)=>{
+        const param = {
+            pageNum:page,
+            pageSize:pageSize,
+            userAccountId:this.state.userAccountId
+
+        }
+        this.onSearch(param);
     }
 
     render() {
@@ -29,12 +42,20 @@ class UserTransaction extends Component {
                 dataIndex: 'actionKind',
             },
             {
-                title: '方法名称',
-                dataIndex: 'methodName',
+                title: 'Real-action',
+                dataIndex: ['firstAction','type'],
             },
             {
-                title: '方法参数',
-                dataIndex: 'argsDTO',
+                title: '方法名称',
+                dataIndex: ['firstAction','method_name'],
+            },
+            {
+                title: 'receiverId',
+                dataIndex: ['firstAction','receiverId'],
+            },
+            {
+                title: 'Real-方法参数',
+                dataIndex: ['firstAction','args'],
             },
             {
                 title: '时间',
