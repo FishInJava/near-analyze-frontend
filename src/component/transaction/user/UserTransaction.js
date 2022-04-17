@@ -70,7 +70,7 @@ class UserTransaction extends Component {
         ];
         return (
             <div>
-                <h1 align="center">用户交易分析页面</h1>
+                <h1 align="center">用户操作查询页面</h1>
                 <Search
                     placeholder="account-id"
                     allowClear
