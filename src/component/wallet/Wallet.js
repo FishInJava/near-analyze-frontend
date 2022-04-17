@@ -7,6 +7,7 @@ import {formatTokenAmount} from '../../utils/amounts';
 import NonFungibleTokens from "../../services/NonFungibleTokens";
 import "antd/dist/antd.min.css";
 import {walletSimple} from "../../utils/walletSimple";
+import {refFinanceTokenPrices} from "../../utils/ref-finance";
 
 const {Search} = Input;
 const FRAC_DIGITS = 5;
@@ -18,22 +19,25 @@ class Wallet extends Component {
         nft:[],
     };
 
+    compare = (p) =>{
+        return function(m,n){
+            const a = m[p];
+            const b = n[p];
+            return b-a; // 降序
+        }
+    }
+
     onSearch = async (accountId) => {
         const likelyContracts = [...new Set([...(await FungibleTokens.getLikelyTokenContracts({accountId})), ...config.WHITELISTED_CONTRACTS])];
         const likelyNFTContracts = await NonFungibleTokens.getLikelyTokenContracts(accountId);
+        // 从ref获取价格
+        const getTokenPriceFromREF = await refFinanceTokenPrices();
 
         let result = [];
-        // near余额通过rpc查询
+        // rpc查询near余额
         const nearAccount = await walletSimple.viewAccount(accountId);
-        result.push({
-            "contract":"NEAR",
-            "symbol":"NEAR",
-            "decimals":null,
-            "balanceOrigin":nearAccount.amount,
-            "balance":formatNearAmount(nearAccount.amount)
-        });
 
-        await Promise.all(likelyContracts.map(async (contractName) => {
+        await Promise.all([...likelyContracts.map(async (contractName) => {
             try {
                 const balance = await FungibleTokens.getBalanceOf({contractName, accountId});
                 // 这可以缓存
@@ -57,11 +61,30 @@ class Wallet extends Component {
                 // Continue loading other likely contracts on failures
                 console.warn(`Failed to load FT for ${contractName}`, e);
             }
-        })).then(()=>{
-            // alert(JSON.stringify(result))
+        }),getTokenPriceFromREF,nearAccount]).then(()=>{
+            // 将near放入
+            result.push({
+                // 这里合约名称用的是WNear，方便后续查价格，目前没有问题
+                "contract":"wrap.near",
+                "symbol":"NEAR",
+                "decimals":24,
+                "balanceOrigin":nearAccount.amount,
+                "balance":formatNearAmount(nearAccount.amount)
+            });
+            // 写入$价格
+            for (const v of result) {
+                const USDPrice = getTokenPriceFromREF[v.contract];
+                if (USDPrice !== undefined){
+                    v.usdPrice = USDPrice.price;
+                    v.totalUsdPrice = USDPrice.price * v.balance;
+                }else {
+                    v.usdPrice = "未从ref获取单价："+v.contract;
+                }
+            }
+            // 排序
+            result.sort(this.compare("totalUsdPrice"));
             this.setState({ft:result})
-        })
-
+        });
 
         let NFTResult = [];
         await Promise.all(likelyNFTContracts.map(async (contractName) => {
@@ -96,14 +119,20 @@ class Wallet extends Component {
                 key: "symbol",
             },
             {
-                title: '用户余额',
+                title: '用户余额(个)',
                 dataIndex: 'balance',
-                key: "balance",
+            },
+            {
+                title: '单价($)',
+                dataIndex: 'usdPrice',
+            },
+            {
+                title: '总价($)',
+                dataIndex: 'totalUsdPrice',
             },
             {
                 title: '合约地址',
                 dataIndex: 'contract',
-                key: "contract",
             },
         ];
         const nft_columns = [
@@ -134,7 +163,7 @@ class Wallet extends Component {
                     onSearch={(value) => this.onSearch(value)}
                 />
                 <div>
-                    <Table dataSource={this.state.ft} columns={ft_columns} rowKey="contract" />
+                    <Table dataSource={this.state.ft} columns={ft_columns} rowKey="symbol" />
                 </div>
                 <div>
                     <Table dataSource={this.state.nft} columns={nft_columns} rowKey="name" />
