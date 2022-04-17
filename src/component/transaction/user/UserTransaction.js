@@ -10,7 +10,8 @@ class UserTransaction extends Component {
         userAccountId: "",
         // 分页使用
         total: 0,
-        pageSize: 10,
+        pageSize: 60,
+        filterMethodName:['confirm','delete_request']
     };
 
     onSearch = (param) => {
@@ -29,8 +30,8 @@ class UserTransaction extends Component {
         const param = {
             pageNum:page,
             pageSize:pageSize,
+            filterMethodName:this.state.filterMethodName,
             userAccountId:this.state.userAccountId
-
         }
         this.onSearch(param);
     }
@@ -78,7 +79,8 @@ class UserTransaction extends Component {
                     onSearch={(userAccountId) => this.onSearch({
                         pageNum: 1,
                         pageSize: this.state.pageSize,
-                        userAccountId: userAccountId
+                        userAccountId: userAccountId,
+                        filterMethodName:this.state.filterMethodName
                     })}
                 />
                 <div>

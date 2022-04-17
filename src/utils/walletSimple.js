@@ -29,6 +29,14 @@ class WalletSimple {
     getAccountBasic(accountId) {
         return new nearApiJs.Account(this.connection, accountId);
     }
+
+    async viewAccount(accountId) {
+        return this.connection.provider.query({
+            request_type: 'view_account',
+            account_id: accountId,
+            finality: 'optimistic'
+        });
+    }
 }
 
 export const walletSimple = new WalletSimple();

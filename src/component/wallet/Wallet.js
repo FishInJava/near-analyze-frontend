@@ -6,6 +6,7 @@ import {formatNearAmount} from "../../utils/balanceHelpers";
 import {formatTokenAmount} from '../../utils/amounts';
 import NonFungibleTokens from "../../services/NonFungibleTokens";
 import "antd/dist/antd.min.css";
+import {walletSimple} from "../../utils/walletSimple";
 
 const {Search} = Input;
 const FRAC_DIGITS = 5;
@@ -22,12 +23,21 @@ class Wallet extends Component {
         const likelyNFTContracts = await NonFungibleTokens.getLikelyTokenContracts(accountId);
 
         let result = [];
+        // near余额通过rpc查询
+        const nearAccount = await walletSimple.viewAccount(accountId);
+        result.push({
+            "contract":"NEAR",
+            "symbol":"NEAR",
+            "decimals":null,
+            "balanceOrigin":nearAccount.amount,
+            "balance":formatNearAmount(nearAccount.amount)
+        });
+
         await Promise.all(likelyContracts.map(async (contractName) => {
             try {
                 const balance = await FungibleTokens.getBalanceOf({contractName, accountId});
                 // 这可以缓存
                 const metadata = await FungibleTokens.getMetadata({contractName});
-                console.log(metadata)
                 let balanceResult;
                 if (metadata.symbol === 'NEAR'){
                     balanceResult = balance && formatNearAmount(balance)
