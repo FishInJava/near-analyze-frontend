@@ -3,6 +3,7 @@ import {Input, Table, Button} from 'antd';
 import axios from "axios";
 import "antd/dist/antd.min.css";
 import {getTransactionInfoUrl} from "../../../utils/explorerUrl";
+import '../../../css/styles.css';
 
 const {Search} = Input;
 
@@ -14,7 +15,8 @@ class UserTransaction extends Component {
         // 分页使用
         total: 0,
         pageSize: 60,
-        filterMethodName: ['confirm', 'delete_request']
+        filterMethodName: ['confirm', 'delete_request'],
+        filterAction: ['addKey', 'deleteKey']
     };
 
     onSearch = (param) => {
@@ -36,7 +38,8 @@ class UserTransaction extends Component {
             pageNum: page,
             pageSize: pageSize,
             filterMethodName: this.state.filterMethodName,
-            userAccountId: this.state.userAccountId
+            filterAction: this.state.filterAction,
+            userAccountId: this.state.userAccountId,
         }
         this.onSearch(param);
     }
@@ -49,6 +52,7 @@ class UserTransaction extends Component {
                 title: '时间',
                 dataIndex: 'blockTimestampStr',
                 key: 'hash',
+                className:'bigFont',
                 align: 'center',
                 render: (text, record) => (
                     <span>
@@ -60,23 +64,26 @@ class UserTransaction extends Component {
                 )
             },
             {
-                title: 'receiverId',
-                align: 'center',
-                dataIndex: ['firstAction', 'receiverId'],
-            },
-            {
                 title: 'Real-action',
                 align: 'center',
                 dataIndex: ['firstAction', 'type'],
             },
             {
+                title: 'receiverId',
+                align: 'center',
+                className:'bigFont',
+                dataIndex: ['firstAction', 'receiverId'],
+            },
+            {
                 title: '方法名称',
                 align: 'center',
+                className:'bigFont',
                 dataIndex: ['firstAction', 'method_name'],
             },
             {
-                title: 'Real-方法参数',
-                align: 'center',
+                title: '方法参数',
+                align: 'left',
+                className:'bigFont',
                 dataIndex: ['firstAction', 'args'],
             },
 
@@ -111,7 +118,8 @@ class UserTransaction extends Component {
                         pageNum: 1,
                         pageSize: this.state.pageSize,
                         userAccountId: userAccountId,
-                        filterMethodName: this.state.filterMethodName
+                        filterMethodName: this.state.filterMethodName,
+                        filterAction: this.state.filterAction,
                     })}
                 />
                 <div>
