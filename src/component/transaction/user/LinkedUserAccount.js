@@ -11,31 +11,13 @@ class LinkedUserAccount extends Component {
         out: [],
     };
 
-    compare = (p) =>{
-        return function(m,n){
-            const a = m[p];
-            const b = n[p];
-            return b-a; // 降序
-        }
-    }
-
     onSearch = (param) => {
         this.setState({in: null, out: null})
         let url = `http://localhost:8080/userTransactionController/getTransferTransactions`
         axios.post(url, param).then((res) => {
-            const inMap = res.data.data.in;
-            const outMap = res.data.data.out;
-            const inArr = [];
-            const outArr = [];
-            for(const key in inMap){
-                inArr.push({"accountId":key,"value":inMap[key]})
-            }
-            for(const key in outMap){
-                outArr.push({"accountId":key,"value":outMap[key]})
-            }
             this.setState({
-                in: inArr.sort(this.compare("value")),
-                out: outArr.sort(this.compare("value")),
+                in: res.data.data.in,
+                out: res.data.data.out,
             })
         })
     }
@@ -44,23 +26,23 @@ class LinkedUserAccount extends Component {
         const transfer_out = [
             {
                 title: '转出账户',
-                dataIndex: 'accountId',
-                key: "accountId",
+                dataIndex: 'value',
+                key: "value",
             },
             {
                 title: '转出数目',
-                dataIndex: 'value',
+                dataIndex: 'score',
             }
         ];
         const transfer_in = [
             {
                 title: '转入账户',
-                dataIndex: 'accountId',
-                key: "accountId",
+                dataIndex: 'value',
+                key: "value",
             },
             {
                 title: '转入数目',
-                dataIndex: 'value',
+                dataIndex: 'score',
             }
         ];
         return (
