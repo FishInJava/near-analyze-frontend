@@ -19,8 +19,7 @@ class UserTransaction extends Component {
 
     onSearch = (param) => {
         this.setState({userAccountId: param.userAccountId})
-        this.setState({userTransactions: null})
-        this.setState({actions: null})
+        this.setState({userTransactions: null, actions: null})
         let url = `http://localhost:8080/userTransactionController/getUserTransactions`
         axios.post(url, param).then((res) => {
             this.setState({
@@ -49,9 +48,9 @@ class UserTransaction extends Component {
             {
                 title: '时间',
                 dataIndex: 'blockTimestampStr',
-                key:'hash',
+                key: 'hash',
                 align: 'center',
-                render: (text,record) =>(
+                render: (text, record) => (
                     <span>
                         {record.blockTimestampStr}
                         <Button onClick={() => {
