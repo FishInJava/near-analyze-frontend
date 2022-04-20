@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Input, Table} from 'antd';
+import {Input, Table,Button} from 'antd';
 import axios from "axios";
 import "antd/dist/antd.min.css";
 const {Search} = Input;
@@ -7,6 +7,7 @@ const {Search} = Input;
 class UserTransaction extends Component {
     state = {
         userTransactions: [],
+        actions: [],
         userAccountId: "",
         // 分页使用
         total: 0,
@@ -16,10 +17,13 @@ class UserTransaction extends Component {
 
     onSearch = (param) => {
         this.setState({userAccountId: param.userAccountId})
+        this.setState({userTransactions: null})
+        this.setState({actions: null})
         let url = `http://localhost:8080/userTransactionController/getUserTransactions`
         axios.post(url, param).then((res) => {
             this.setState({
                 userTransactions: res.data.data.list,
+                actions: res.data.data.actions,
                 total: res.data.data.total
             })
         })
@@ -68,6 +72,23 @@ class UserTransaction extends Component {
                 key: "hash",
             },
         ];
+        const userTransactionAction = [
+            {
+                title: 'actionKind',
+                dataIndex: 'actionKind',
+                key: "actionKind",
+            },
+            {
+                title: '数目',
+                dataIndex: 'count',
+            },
+            {
+                title: '操作',
+                dataIndex: 'actionKind',
+                render: (actionKind) =><Button type="primary" onClick={() => {
+                    console.log(actionKind)}}>查看</Button>
+            },
+        ];
         return (
             <div>
                 <h1 align="center">用户操作查询页面</h1>
@@ -83,6 +104,9 @@ class UserTransaction extends Component {
                         filterMethodName:this.state.filterMethodName
                     })}
                 />
+                <div>
+                    <Table dataSource={this.state.actions} columns={userTransactionAction} rowKey="actionKind"/>
+                </div>
                 <div>
                     <Table dataSource={this.state.userTransactions} columns={userTransactionColumns}
                            rowKey="hash"

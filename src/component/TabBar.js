@@ -20,6 +20,9 @@ export default function TabBar() {
                 <li>
                     <NavLink to="/transaction/user">用户操作查询</NavLink>
                 </li>
+                <li>
+                    <NavLink to="/transaction/user/linkedUser">关联账户（Transfer统计）</NavLink>
+                </li>
             </ul>
         </footer>)
 }
