@@ -50,6 +50,7 @@ class UserTransaction extends Component {
                 title: '时间',
                 dataIndex: 'blockTimestampStr',
                 key:'hash',
+                align: 'center',
                 render: (text,record) =>(
                     <span>
                         {record.blockTimestampStr}
@@ -60,23 +61,23 @@ class UserTransaction extends Component {
                 )
             },
             {
-                title: 'actionKind',
-                dataIndex: 'actionKind',
+                title: 'receiverId',
+                align: 'center',
+                dataIndex: ['firstAction', 'receiverId'],
             },
             {
                 title: 'Real-action',
+                align: 'center',
                 dataIndex: ['firstAction', 'type'],
             },
             {
                 title: '方法名称',
+                align: 'center',
                 dataIndex: ['firstAction', 'method_name'],
             },
             {
-                title: 'receiverId',
-                dataIndex: ['firstAction', 'receiverId'],
-            },
-            {
                 title: 'Real-方法参数',
+                align: 'center',
                 dataIndex: ['firstAction', 'args'],
             },
 
