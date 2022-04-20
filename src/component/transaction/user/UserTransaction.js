@@ -1,7 +1,9 @@
 import React, {Component} from "react";
-import {Input, Table,Button} from 'antd';
+import {Input, Table, Button} from 'antd';
 import axios from "axios";
 import "antd/dist/antd.min.css";
+import {getTransactionInfoUrl} from "../../../utils/explorerUrl";
+
 const {Search} = Input;
 
 class UserTransaction extends Component {
@@ -12,7 +14,7 @@ class UserTransaction extends Component {
         // 分页使用
         total: 0,
         pageSize: 60,
-        filterMethodName:['confirm','delete_request']
+        filterMethodName: ['confirm', 'delete_request']
     };
 
     onSearch = (param) => {
@@ -30,47 +32,54 @@ class UserTransaction extends Component {
     }
 
     // 分页
-    changePage = (page,pageSize)=>{
+    changePage = (page, pageSize) => {
         const param = {
-            pageNum:page,
-            pageSize:pageSize,
-            filterMethodName:this.state.filterMethodName,
-            userAccountId:this.state.userAccountId
+            pageNum: page,
+            pageSize: pageSize,
+            filterMethodName: this.state.filterMethodName,
+            userAccountId: this.state.userAccountId
         }
         this.onSearch(param);
     }
 
     render() {
+
+
         const userTransactionColumns = [
+            {
+                title: '时间',
+                dataIndex: 'blockTimestampStr',
+                key:'hash',
+                render: (text,record) =>(
+                    <span>
+                        {record.blockTimestampStr}
+                        <Button onClick={() => {
+                            window.open(getTransactionInfoUrl(record.hash))
+                        }}>{record.hash}</Button>
+                    </span>
+                )
+            },
             {
                 title: 'actionKind',
                 dataIndex: 'actionKind',
             },
             {
                 title: 'Real-action',
-                dataIndex: ['firstAction','type'],
+                dataIndex: ['firstAction', 'type'],
             },
             {
                 title: '方法名称',
-                dataIndex: ['firstAction','method_name'],
+                dataIndex: ['firstAction', 'method_name'],
             },
             {
                 title: 'receiverId',
-                dataIndex: ['firstAction','receiverId'],
+                dataIndex: ['firstAction', 'receiverId'],
             },
             {
                 title: 'Real-方法参数',
-                dataIndex: ['firstAction','args'],
+                dataIndex: ['firstAction', 'args'],
             },
-            {
-                title: '时间',
-                dataIndex: 'blockTimestampStr',
-            },
-            {
-                title: '交易hash',
-                dataIndex: 'hash',
-                key: "hash",
-            },
+
         ];
         const userTransactionAction = [
             {
@@ -85,8 +94,9 @@ class UserTransaction extends Component {
             {
                 title: '操作',
                 dataIndex: 'actionKind',
-                render: (actionKind) =><Button type="primary" onClick={() => {
-                    console.log(actionKind)}}>查看</Button>
+                render: (actionKind) => <Button type="primary" onClick={() => {
+                    console.log(actionKind)
+                }}>查看</Button>
             },
         ];
         return (
@@ -101,7 +111,7 @@ class UserTransaction extends Component {
                         pageNum: 1,
                         pageSize: this.state.pageSize,
                         userAccountId: userAccountId,
-                        filterMethodName:this.state.filterMethodName
+                        filterMethodName: this.state.filterMethodName
                     })}
                 />
                 <div>

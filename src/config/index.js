@@ -46,7 +46,8 @@ const config = {
     NEAR_TOKEN_ID: 'wrap.near',
     FARMING_CLAIM_YOCTO: '1',
     REF_FINANCE_API_ENDPOINT: 'https://indexer.ref-finance.net',
-    REF_FINANCE_CONTRACT: 'v2.ref-finance.near'
+    REF_FINANCE_CONTRACT: 'v2.ref-finance.near',
+    explorer_url: 'https://explorer.near.org/',
 };
 
 export {config};
