@@ -7,12 +7,14 @@ import RefFinance from "../component/reffinance/RefFinance";
 import UserTransaction from "../component/transaction/user/UserTransaction";
 import LinkedUserAccount from "../component/transaction/user/LinkedUserAccount";
 import StatisticsFilter from "../component/statistics/StatisticsFilter";
+import HotTransactionsHistory from "../component/transaction/HotTransactionsHistory";
 
 /*路由*/
 export default function MainRouter() {
     return (
         <Routes>
             <Route path="/hotTransaction" element={<HotTransactions/>}/>
+            <Route path="/hotTransactionsHistory" element={<HotTransactionsHistory/>}/>
             <Route path="/statistics" element={<Statistics/>}/>
             <Route path="/statisticsFilter" element={<StatisticsFilter/>}/>
             <Route path="/wallet" element={<Wallet/>}/>

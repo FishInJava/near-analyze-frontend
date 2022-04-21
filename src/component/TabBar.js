@@ -6,7 +6,10 @@ export default function TabBar() {
         <footer>
             <ul>
                 <li>
-                    <NavLink to="/hotTransaction">火爆合约</NavLink>
+                    <NavLink to="/hotTransaction">火爆合约Redis</NavLink>
+                </li>
+                <li>
+                    <NavLink to="/hotTransactionsHistory">火爆合约Redis(历史)</NavLink>
                 </li>
                 <li>
                     <NavLink to="/statistics">合约统计（transaction_analyze）</NavLink>
