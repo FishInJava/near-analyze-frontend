@@ -9,13 +9,16 @@ export default function TabBar() {
                     <NavLink to="/hotTransaction">火爆合约</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/statistics">合约</NavLink>
+                    <NavLink to="/statistics">合约统计（transaction_analyze）</NavLink>
+                </li>
+                <li>
+                    <NavLink to="/statisticsFilter">合约统计过滤（transaction_analyze_filter）</NavLink>
                 </li>
                 <li>
                     <NavLink to="/wallet">钱包查询</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/ref-finance">REF份额分析</NavLink>
+                    <NavLink to="/refFinance">REF份额分析</NavLink>
                 </li>
                 <li>
                     <NavLink to="/transaction/user">用户操作查询</NavLink>

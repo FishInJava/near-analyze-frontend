@@ -6,6 +6,7 @@ import Wallet from "../component/wallet/Wallet";
 import RefFinance from "../component/reffinance/RefFinance";
 import UserTransaction from "../component/transaction/user/UserTransaction";
 import LinkedUserAccount from "../component/transaction/user/LinkedUserAccount";
+import StatisticsFilter from "../component/statistics/StatisticsFilter";
 
 /*路由*/
 export default function MainRouter() {
@@ -13,8 +14,9 @@ export default function MainRouter() {
         <Routes>
             <Route path="/hotTransaction" element={<HotTransactions/>}/>
             <Route path="/statistics" element={<Statistics/>}/>
+            <Route path="/statisticsFilter" element={<StatisticsFilter/>}/>
             <Route path="/wallet" element={<Wallet/>}/>
-            <Route path="/ref-finance" element={<RefFinance/>}/>
+            <Route path="/refFinance" element={<RefFinance/>}/>
             <Route path="/transaction/user" element={<UserTransaction/>}/>
             <Route path="/transaction/user/linkedUser" element={<LinkedUserAccount/>}/>
             {/*如果前面都没匹配上，进行重定向，使用的是Navigate组件*/}
