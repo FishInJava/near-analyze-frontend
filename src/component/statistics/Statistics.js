@@ -2,6 +2,7 @@ import React,{Component} from "react";
 import {Table, Button} from "antd";
 import axios from "axios";
 import "antd/dist/antd.min.css";
+import '../../css/styles.css';
 
 // 从transaction_analyze表中获取数据分析
 class Statistics extends Component {
@@ -47,18 +48,22 @@ class Statistics extends Component {
         const getStatisticsTransactions_columns = [
             {
                 title: '合约地址',
+                align: 'center',
+                className:'bigFont',
                 dataIndex: 'value',
                 key: "value",
             },
             {
                 title: '访问次数',
+                align: 'center',
+                className:'bigFont',
                 dataIndex: 'count',
                 key: "count",
             }
         ];
         return (
-            <div>
-                <h1 align="center">Statistics页面</h1>
+            <div align={'center'}>
+                <h1 align="center">合约统计（transaction_analyze）页面</h1>
                 <div>
                     <Button onClick={() => this.setState({flag: 1})}>signer_id发起者维度</Button>
                     <Button onClick={() => this.setState({flag: 2})}>receiver_id合约维度</Button>

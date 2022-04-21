@@ -2,6 +2,7 @@ import React,{Component} from "react";
 import {Table, Button} from "antd";
 import axios from "axios";
 import "antd/dist/antd.min.css";
+import '../../css/styles.css';
 
 // 从transaction_analyze_filter表中获取数据分析
 class StatisticsFilter extends Component {
@@ -48,16 +49,20 @@ class StatisticsFilter extends Component {
             {
                 title: '合约地址',
                 dataIndex: 'value',
+                align: 'center',
+                className:'bigFont',
                 key: "value",
             },
             {
                 title: '访问次数',
+                align: 'center',
+                className:'bigFont',
                 dataIndex: 'count',
                 key: "count",
             }
         ];
         return (
-            <div>
+            <div align={'center'}>
                 <h1 align="center">合约统计过滤（transaction_analyze_filter）页面</h1>
                 <div>
                     <Button onClick={() => this.setState({flag: 1})}>signer_id发起者维度</Button>
